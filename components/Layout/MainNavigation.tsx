@@ -13,7 +13,7 @@ const MainNavigation = () => {
             <Link href="/auth">Login</Link>
           </li>
           <li>
-            <Link href="/profile"></Link>
+            <Link href="/profile">Profile</Link>
           </li>
           <li>
             <button type="button">Logout</button>
