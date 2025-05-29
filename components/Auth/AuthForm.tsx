@@ -22,18 +22,14 @@ const createUser = async (user: User) => {
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleSwitchAuthMode = () => {
     setIsLogin((prevState) => !prevState);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
+  const handleSubmit = async (formData: FormData) => {
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     if (!email || !password) {
       return;
@@ -54,24 +50,19 @@ const AuthForm = () => {
         console.log(error);
       }
     }
-
-    if (emailRef.current && passwordRef.current) {
-      emailRef.current.value = "";
-      passwordRef.current.value = "";
-    }
   };
 
   return (
     <section className={styles.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
-      <form onSubmit={handleSubmit}>
+      <form action={handleSubmit}>
         <div className={styles.control}>
           <label htmlFor="email">Your Email</label>
-          <input ref={emailRef} type="email" id="email" required />
+          <input type="email" id="email" name="email" required />
         </div>
         <div className={styles.control}>
           <label htmlFor="password">Your Password</label>
-          <input ref={passwordRef} type="password" id="password" required />
+          <input type="password" id="password" name="password" required />
         </div>
         <div className={styles.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
